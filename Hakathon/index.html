@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>firebase</title>
+</head>
+<body>
+
+<label for="text">Name</label>
+<input type="text" id="nameinput">
+<button id="clickButton" type="submit">Submit</button>
+
+
+<h1 id="display"></h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+
+<script>
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBIAzTV83_cR4PKUdXqdAN1ZEmvRAXKfHQ",
+    authDomain: "tuiapp-389ee.firebaseapp.com",
+    databaseURL: "https://tuiapp-389ee.firebaseio.com",
+    storageBucket: "tuiapp-389ee.appspot.com",
+    messagingSenderId: "915850959625"
+  };
+   firebase.initializeApp(config);
+
+//create variable
+var database = firebase.database();
+var name = "";
+
+$("#clickButton").on("click",function(){
+       name =$("#nameinput").val().trim();
+
+       //ref is root
+       //passes to database
+
+       database.ref().set({
+          name: name
+
+       });
+       $("#display").html(name)
+       return false;
+
+});
+
+// event lisetners
+database.ref().on("value",function(snap){
+  $("#display").html(snap.val().name);
+
+
+});
+
+</script>
+</body>
+</html>
